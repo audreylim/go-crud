@@ -1,0 +1,14 @@
+{{define "editpage"}}
+<html>
+{{with .Posts}}
+{{range .}}
+<form action="/home/save" method="post">
+	<input type="text" name="textedit" value="{{.Status}}"></input>
+	<button type="submit" name="xsave" id="save" value="{{.Tweetid}}">Save</button>
+</form>
+
+
+{{end}}
+{{end}}
+</html>
+{{end}}

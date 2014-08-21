@@ -1,0 +1,39 @@
+{{define "homepage"}}
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="/stylesheets/home.css" />
+	</head>
+
+	<body>
+		<div class="welcome">
+		<h1 id="hi">hi, </h1><h1 id="username">{{.Username}}</h1>
+		</div>
+        <div id="tweetbox">
+        	<form action="/home/tweets" method="POST">
+        		<input type="text" id="tweet" name="twt" placeholder="
+        enter tweet here"></input>
+        		<button type="Tweet" id="twtbutton">Tweet</button>
+            </form>
+		</div>
+   
+        <div id="tweetcol">
+  			{{with .Posts}}
+        	{{range .}}
+    			<p id="twt">{{ .Status}}</p>
+    			<form action="/home/delete" method="POST">
+					<button type="submit" id="xbutton" name="xdel" value="{{.Tweetid}}">| Delete</button>
+				</form>
+				<form action="/home/edit" method="POST">
+					<button type="submit" id="xedit" name="xedit" value="{{.Tweetid}}">Edit |</button>
+				</form>
+				<br><br>
+			{{end}}
+    		{{end}}
+    	</div>
+			<form action="/logout" method="POST">
+				<button type="submit" id="logoutbutton">Goodbye</button>
+			</form>	
+	</body>
+</html>
+{{end}}

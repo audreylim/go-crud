@@ -1,0 +1,92 @@
+body {
+	font-family: Helvetica;
+	font-weight: lighter;
+	font-size: 20px;
+}
+
+h1 {
+	font-family: Helvetica;
+	display: inline;
+	font-weight: lighter;
+}
+
+.welcome {
+	width: 360px;
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+#username {
+	font-weight: bolder;
+}
+
+button {
+	font-family: Helvetica;
+	font-size: 14px;
+	text-align: center;
+	color: #fff;
+	border-radius: 3px;
+	border: none;
+	background-color: #62B1F6;
+}
+
+
+#tweetbox {
+	position: relative;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+#twtbutton {
+	height: 35px;
+	width: 60px;
+	background-color: #000;
+}
+
+#tweet {
+	width: 300px;
+	height: 35px;
+	font-size: 16px;
+	text-align: center;
+}
+
+#tweetcol {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	width: 350px;
+	
+
+}
+
+
+#logoutbutton {
+	position: fixed;
+	right: 10px;
+	top: 10px;
+	height: 35px;
+	width: 70px;
+	background-color: #fff;
+	color: #62B1F6;
+}
+
+form {
+	display: inline;
+}
+
+#twt, #xbutton, #xedit {
+	position: relative;
+	display: inline;
+}
+
+#xbutton, #xedit {
+	float: right;
+	background-color: #fff;
+	color: #000;
+}
+
+#divdr {
+	display: inline;
+}
