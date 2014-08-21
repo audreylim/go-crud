@@ -360,6 +360,9 @@ func main() {
     router.PathPrefix("/").Handler(http.FileServer(http.Dir("./layout/")))
 
 	http.Handle("/", router)
-	http.ListenAndServe(":8000", nil)
+	err := http.ListenAndServe(":"+os.Getenv("PORT") , nil)
+	if err != nil {
+		panic(err)
+	}
 
 }
