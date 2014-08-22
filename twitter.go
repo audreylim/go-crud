@@ -346,7 +346,7 @@ var router = mux.NewRouter()
 
 
 func main() {
-	db, _ = sql.Open("mysql", "b7ce733b97afad:414aa83f@us-cdbr-iron-east-01.cleardb.net/heroku_31467bc306ebc54?reconnect=true")//rmb to handle error
+	db, _ = sql.Open("mysql", "b7ce733b97afad:414aa83f@54.227.215.252/heroku_31467bc306ebc54?reconnect=true")//rmb to handle error
 	defer db.Close()
 	router.HandleFunc("/", loghandler)
 	router.HandleFunc("/login", loginhandler)
