@@ -99,8 +99,4 @@ form {
 #actions {
 	width: 110px;
 	float: right;
-	vertical-align: top;
-	padding: 0;
-	display: inline;
-	margin-top: -10px;
 }
