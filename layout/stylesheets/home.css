@@ -14,7 +14,7 @@ h1 {
 	width: 360px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 70px;
+	margin-top: 35px;
 
 }
 
@@ -93,9 +93,9 @@ form {
 }
 
 #statuses {
-	width: 200px;
+	width: 230px;
 }
 
 #actions {
-	width: 60px;
+	width: 80px;
 }
