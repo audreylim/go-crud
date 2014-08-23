@@ -106,5 +106,10 @@ form {
 
 #editbox {
 	width: 300px;
-	height: 250px;
+	height: 100px;
+	text-align: top;
+}
+
+#save {
+	text-align: top;
 }
