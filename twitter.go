@@ -36,6 +36,7 @@ var postvalue string
 var statusid string
 var settweet string
 var db *sql.DB
+var err error 
 
 //db
 func ReadStatus() (res [][]string) { 
@@ -177,18 +178,18 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	switch {
 		//existing user correct pw
 		case logname != "" && logpass != "" && logname == AuthUser() && logpass == AuthPw():
-		setSession(logname, w)
-		redirectTarget = "/home"
+			setSession(logname, w)
+			redirectTarget = "/home"
 		//existing user wrong pw
 		case logname != "" && logpass != "" && logname == AuthUser() && logpass != AuthPw():
 			fmt.Fprintf(w, "<html>wrong password</html>")
 		//new user
 		case logname != "" && logpass != "" && logname != AuthUser():
-		AddUser.Username = logname
-		AddUser.Password = logpass
-		InsertData()
-		setSession(logname, w)
-		redirectTarget = "/home" 
+			AddUser.Username = logname
+			AddUser.Password = logpass
+			InsertData()
+			setSession(logname, w)
+			redirectTarget = "/home" 
 	}
 	http.Redirect(w, r, redirectTarget, 302)
 }
@@ -300,9 +301,10 @@ func checkError(err error) {
 var router = mux.NewRouter()
 
 func main() {
-	db, err := sql.Open("mysql", "b7ce733b97afad:414aa83f@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")
+	db, err = sql.Open("mysql", "b7ce733b97afad:414aa83f@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")
 	checkError(err)
 	defer db.Close()
+
 	router.HandleFunc("/", logHandler)
 	router.HandleFunc("/login", loginHandler)
 	router.HandleFunc("/home", homeHandler)
