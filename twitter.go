@@ -234,8 +234,8 @@ func deletehandler(w http.ResponseWriter, r *http.Request) {
 func edithandler(w http.ResponseWriter, r *http.Request) {
 	statusid = r.PostFormValue("xedit")
 	as := Post{Tweetid: statusid, Status: ReadSingleStatus()}
-	person := User{Posts: []*Post{&as}}
-	renderTemplate(w, "edit", "editpage", person)
+	a := User{Posts: []*Post{&as}}
+	renderTemplate(w, "edit", "editpage", a)
 }
 
 func savehandler(w http.ResponseWriter, r *http.Request) {
