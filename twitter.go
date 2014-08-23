@@ -217,7 +217,7 @@ func homehandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func usertweetHandler(w http.ResponseWriter, r *http.Request) {
+func usertweethandler(w http.ResponseWriter, r *http.Request) {
 	AddUser.Username = getUserName(r)
 	AddTweet = r.FormValue("twt")
 	InsertTweetData()
@@ -305,7 +305,7 @@ func main() {
 	router.HandleFunc("/", loghandler)
 	router.HandleFunc("/login", loginhandler)
 	router.HandleFunc("/home", homehandler)
-	router.HandleFunc("/home/tweets", usertweetHandler).Methods("POST")
+	router.HandleFunc("/home/tweets", usertweethandler).Methods("POST")
 	router.HandleFunc("/logout", logouthandler).Methods("POST")
 	router.HandleFunc("/home/delete", deletehandler).Methods("POST")
 	router.HandleFunc("/home/edit", edithandler).Methods("POST")
