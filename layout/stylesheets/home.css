@@ -1,0 +1,114 @@
+body {
+	font-family: Helvetica;
+	font-weight: lighter;
+	font-size: 20px;
+}
+
+h1 {
+	font-family: Helvetica;
+	display: inline;
+	font-weight: lighter;
+}
+
+.welcome {
+	width: 450px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 35px;
+	text-align: center;
+
+}
+
+#username {
+	font-weight: bolder;
+}
+
+button {
+	font-family: Helvetica;
+	font-size: 14px;
+	text-align: center;
+	color: #fff;
+	border-radius: 3px;
+	border: none;
+	background-color: #62B1F6;
+}
+
+
+#tweetbox {
+	position: relative;
+	margin-top: 25px;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+#twtbutton {
+	height: 35px;
+	width: 60px;
+	background-color: #000;
+}
+
+#tweet {
+	width: 430px;
+	height: 35px;
+	font-size: 15px;
+	text-align: center;
+}
+
+#tweetcol {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+	
+
+}
+
+
+#logoutbutton {
+	position: fixed;
+	right: 10px;
+	top: 10px;
+	height: 35px;
+	width: 70px;
+	background-color: #fff;
+	color: #62B1F6;
+}
+
+form {
+	display: inline;
+}
+
+#twt, #xbutton, #xedit, #divdr {
+	position: relative;
+	display: inline;
+}
+
+#xbutton, #xedit, #divdr {
+	float: right;
+	background-color: #fff;
+	color: #000;
+}
+
+#divdr {
+	font-size: 18px;
+}
+
+#statuses {
+	width: 280px;
+}
+
+#actions {
+	width: 110px;
+	float: right;
+	vertical-align: top;
+	display: inline;
+	margin-top: -22px;
+}
+
+#editbox {
+	width: 300px;
+	height: 100px;
+	font-size: 15px;
+}
+
+

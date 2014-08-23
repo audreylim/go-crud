@@ -1,0 +1,32 @@
+{{define "log"}}
+
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/stylesheets/log.css" />
+</head>
+<body>
+
+ 	<h1> hello! </h1>
+		<div>
+		<form action="/login" method="POST">
+			
+			<div id="username">
+				<input type="text" id="Username" name="name" placeholder="Username" maxlength="15"></input>
+			</div>
+
+			<div id="password">
+				<input type="password" id="Password" name="password" placeholder="Password" maxlength="15"></input>
+			</div>
+
+			<div id="button">
+				<button type="submit">Log In || Sign up</button>
+			</div>
+
+
+		</form> 
+</div>
+</body>
+
+</html>
+{{end}}
