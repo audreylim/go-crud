@@ -22,10 +22,11 @@
         	{{range .}}
     			<p id="twt">{{ .Status}}</p>
     			<form action="/home/delete" method="POST">
-					<button type="submit" id="xbutton" name="xdel" value="{{.Tweetid}}">| Delete</button>
+					<button type="submit" id="xbutton" name="xdel" value="{{.Tweetid}}">Delete</button>
 				</form>
+				<p id="divdr">|</divdr>
 				<form action="/home/edit" method="POST">
-					<button type="submit" id="xedit" name="xedit" value="{{.Tweetid}}">Edit |</button>
+					<button type="submit" id="xedit" name="xedit" value="{{.Tweetid}}">Edit</button>
 				</form>
 				<br><br>
 			{{end}}
