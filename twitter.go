@@ -11,19 +11,19 @@ import (
 	"os"
 )
 
-//User table 
+//User table
 type User struct {
-	Userid    	int64
-	Username  	string
-	Password 	string
-	Posts 		[]*Post
+	Userid   int64
+	Username string
+	Password string
+	Posts    []*Post
 }
 
 //Posts table
 type Post struct {
-	Tweetid 	string
-	Username   	string
-	Status 		string
+	Tweetid  string
+	Username string
+	Status   string
 }
 
 //global variables
@@ -36,14 +36,14 @@ var postvalue string
 var statusid string
 var settweet string
 var db *sql.DB
-var err error 
+var err error
 
 //db
-func ReadStatus() (res [][]string) { 
+func ReadStatus() (res [][]string) {
 	err := db.Ping()
-		checkError(err)
+	checkError(err)
 	rows, err := db.Query("select id, tweet, username from posts where username = ? order by id DESC", currentuser)
-		checkError(err)
+	checkError(err)
 	defer rows.Close()
 	var tweet, id, username string
 	for rows.Next() {
@@ -58,9 +58,9 @@ func ReadStatus() (res [][]string) {
 
 func ReadSingleStatus() (res string) {
 	err := db.Ping()
-		checkError(err)
+	checkError(err)
 	rows, err := db.Query("select tweet from posts where id = ?", statusid)
-		checkError(err)
+	checkError(err)
 	defer rows.Close()
 	var status string
 	for rows.Next() {
@@ -73,7 +73,7 @@ func ReadSingleStatus() (res string) {
 
 func ReadStatusId() (res int) {
 	err := db.Ping()
-		checkError(err)
+	checkError(err)
 	rows, err := db.Query("Select id from posts where tweet = ?", AddTweet)
 	if err != nil {
 		fmt.Println(err)
@@ -89,56 +89,56 @@ func ReadStatusId() (res int) {
 
 func InsertData() {
 	stmt, err := db.Prepare("INSERT INTO users(id, username, password) VALUES(?, ?, ?)")
-		checkError(err)
+	checkError(err)
 	res, err := stmt.Exec(AddUser.Userid, AddUser.Username, AddUser.Password)
-		checkError(err)
+	checkError(err)
 	lastId, err := res.LastInsertId()
-		checkError(err)
+	checkError(err)
 	rowCnt, err := res.RowsAffected()
-		checkError(err)
+	checkError(err)
 	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
 }
 
 func InsertTweetData() {
 	stmt, err := db.Prepare("INSERT INTO posts(tweet, username) VALUES(?, ?)")
-		checkError(err)
+	checkError(err)
 	res, err := stmt.Exec(AddTweet, AddUser.Username)
-		checkError(err)
+	checkError(err)
 	lastId, err := res.LastInsertId()
-		checkError(err)
+	checkError(err)
 	rowCnt, err := res.RowsAffected()
-		checkError(err)
+	checkError(err)
 	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
 }
 
 func DeleteTweet() {
-	stmt, err := db.Prepare("DELETE FROM posts where id = ?") 
-		checkError(err)
+	stmt, err := db.Prepare("DELETE FROM posts where id = ?")
+	checkError(err)
 	res, err := stmt.Exec(postvalue)
-		checkError(err)
+	checkError(err)
 	lastId, err := res.LastInsertId()
-		checkError(err)
+	checkError(err)
 	rowCnt, err := res.RowsAffected()
-		checkError(err)
+	checkError(err)
 	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
 }
 
 func EditTweet() {
 	stmt, err := db.Prepare("UPDATE posts set tweet = ? where id = ?")
 	a, err := stmt.Exec(settweet, statusid)
-		checkError(err)
+	checkError(err)
 	lastId, err := a.LastInsertId()
-		checkError(err)
+	checkError(err)
 	rowCnt, err := a.RowsAffected()
-		checkError(err)
+	checkError(err)
 	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
 }
 
 func AuthUser() (res string) {
 	err := db.Ping()
-		checkError(err)
+	checkError(err)
 	rows, err := db.Query("select username from users where username = ?", logname)
-		checkError(err)
+	checkError(err)
 	defer rows.Close()
 	var logusername string
 	for rows.Next() {
@@ -146,22 +146,22 @@ func AuthUser() (res string) {
 		checkError(err)
 		res = logusername
 	}
-	return 
+	return
 }
 
 func AuthPw() (res string) {
 	err := db.Ping()
-		checkError(err)
+	checkError(err)
 	rows, err := db.Query("select password from users where username = ?", logname)
-		checkError(err)
+	checkError(err)
 	defer rows.Close()
 	var logpw string
 	for rows.Next() {
 		err := rows.Scan(&logpw)
-			checkError(err)
+		checkError(err)
 		res = logpw
 	}
-	return 
+	return
 }
 
 //handlers
@@ -176,20 +176,20 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(AuthPw(), logpass)
 	redirectTarget := "/"
 	switch {
-		//existing user correct pw
-		case logname != "" && logpass != "" && logname == AuthUser() && logpass == AuthPw():
-			setSession(logname, w)
-			redirectTarget = "/home"
-		//existing user wrong pw
-		case logname != "" && logpass != "" && logname == AuthUser() && logpass != AuthPw():
-			fmt.Fprintf(w, "<html>wrong password</html>")
-		//new user
-		case logname != "" && logpass != "" && logname != AuthUser():
-			AddUser.Username = logname
-			AddUser.Password = logpass
-			InsertData()
-			setSession(logname, w)
-			redirectTarget = "/home" 
+	//existing user correct pw
+	case logname != "" && logpass != "" && logname == AuthUser() && logpass == AuthPw():
+		setSession(logname, w)
+		redirectTarget = "/home"
+	//existing user wrong pw
+	case logname != "" && logpass != "" && logname == AuthUser() && logpass != AuthPw():
+		fmt.Fprintf(w, "<html>wrong password</html>")
+	//new user
+	case logname != "" && logpass != "" && logname != AuthUser():
+		AddUser.Username = logname
+		AddUser.Password = logpass
+		InsertData()
+		setSession(logname, w)
+		redirectTarget = "/home"
 	}
 	http.Redirect(w, r, redirectTarget, 302)
 }
@@ -202,16 +202,16 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	currentuser = getUserName(r)
 	if currentuser != "" {
-		var as []Post 
+		var as []Post
 		a := User{}
 		m := ReadStatus()
-		for i:=0;i<len(m);i++{
-		as = append(as, Post{Tweetid: m[i][0], Username: currentuser, Status: m[i][1]})
-	    }
-	    a = User{Username: currentuser}
-	    for i:=0;i<len(m);i++ {
-	    	a.Posts = append(a.Posts, &as[i])
-	    }
+		for i := 0; i < len(m); i++ {
+			as = append(as, Post{Tweetid: m[i][0], Username: currentuser, Status: m[i][1]})
+		}
+		a = User{Username: currentuser}
+		for i := 0; i < len(m); i++ {
+			a.Posts = append(a.Posts, &as[i])
+		}
 		renderTemplate(w, "home", "homepage", a)
 	} else {
 		http.Redirect(w, r, "/", 302)
@@ -228,7 +228,7 @@ func usertweetHandler(w http.ResponseWriter, r *http.Request) {
 func deleteHandler(w http.ResponseWriter, r *http.Request) {
 	currentuser = getUserName(r)
 	postvalue = r.PostFormValue("xdel")
-	DeleteTweet() 
+	DeleteTweet()
 	http.Redirect(w, r, "/home", 302)
 }
 
@@ -257,7 +257,7 @@ func getUserName(r *http.Request) (currentuser string) {
 			currentuser = cookieValue["name"]
 		}
 	}
-	return 
+	return
 }
 
 func setSession(userName string, w http.ResponseWriter) {
@@ -314,10 +314,10 @@ func main() {
 	router.HandleFunc("/home/edit", editHandler).Methods("POST")
 	router.HandleFunc("/home/save", saveHandler).Methods("POST")
 
-    router.PathPrefix("/").Handler(http.FileServer(http.Dir("./layout/")))
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./layout/")))
 
 	http.Handle("/", router)
-	err := http.ListenAndServe(":"+os.Getenv("PORT") , nil)
+	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 	if err != nil {
 		panic(err)
 	}
