@@ -8,8 +8,8 @@
 
 {{with .Posts}}
 {{range .}}
-<form action="/home/save" method="post" id="editbox">
-	<input type="text" name="textedit" value="{{.Status}}"></input>
+<form action="/home/save" method="post">
+	<input type="text" name="textedit" value="{{.Status}}" id="editbox"></input>
 	<button type="submit" name="xsave" id="save" value="{{.Tweetid}}">Save</button>
 </form>
 
