@@ -36,6 +36,7 @@ var postvalue string
 var statusid string
 var settweet string
 var db *sql.DB
+var err error 
 
 //db
 func ReadStatus() (res [][]string) { 
@@ -164,11 +165,11 @@ func AuthPw() (res string) {
 }
 
 //handlers
-func loghandler(w http.ResponseWriter, r *http.Request) {
+func logHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "log", "log", User{})
 }
 
-func loginhandler(w http.ResponseWriter, r *http.Request) {
+func loginHandler(w http.ResponseWriter, r *http.Request) {
 	logname = r.FormValue("name")
 	logpass = r.FormValue("password")
 	AddUser.Password = logpass
@@ -193,12 +194,12 @@ func loginhandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, redirectTarget, 302)
 }
 
-func logouthandler(w http.ResponseWriter, r *http.Request) {
+func logoutHandler(w http.ResponseWriter, r *http.Request) {
 	clearSession(w)
 	http.Redirect(w, r, "/", 302)
 }
 
-func homehandler(w http.ResponseWriter, r *http.Request) {
+func homeHandler(w http.ResponseWriter, r *http.Request) {
 	currentuser = getUserName(r)
 	if currentuser != "" {
 		var as []Post 
@@ -217,28 +218,28 @@ func homehandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func usertweethandler(w http.ResponseWriter, r *http.Request) {
+func usertweetHandler(w http.ResponseWriter, r *http.Request) {
 	AddUser.Username = getUserName(r)
 	AddTweet = r.FormValue("twt")
 	InsertTweetData()
 	http.Redirect(w, r, "/home", 302)
 }
 
-func deletehandler(w http.ResponseWriter, r *http.Request) {
+func deleteHandler(w http.ResponseWriter, r *http.Request) {
 	currentuser = getUserName(r)
 	postvalue = r.PostFormValue("xdel")
 	DeleteTweet() 
 	http.Redirect(w, r, "/home", 302)
 }
 
-func edithandler(w http.ResponseWriter, r *http.Request) {
+func editHandler(w http.ResponseWriter, r *http.Request) {
 	statusid = r.PostFormValue("xedit")
 	as := Post{Tweetid: statusid, Status: ReadSingleStatus()}
 	a := User{Posts: []*Post{&as}}
 	renderTemplate(w, "edit", "editpage", a)
 }
 
-func savehandler(w http.ResponseWriter, r *http.Request) {
+func saveHandler(w http.ResponseWriter, r *http.Request) {
 	statusid = r.PostFormValue("xsave")
 	settweet = r.PostFormValue("textedit")
 	EditTweet()
@@ -300,16 +301,17 @@ func checkError(err error) {
 var router = mux.NewRouter()
 
 func main() {
-	db, _ = sql.Open("mysql", "b7ce733b97afad:414aa83f@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")
+	db, err = sql.Open("mysql", "b7ce733b97afad:414aa83f@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")
+	checkError(err)
 	defer db.Close()
-	router.HandleFunc("/", loghandler)
-	router.HandleFunc("/login", loginhandler)
-	router.HandleFunc("/home", homehandler)
-	router.HandleFunc("/home/tweets", usertweethandler).Methods("POST")
-	router.HandleFunc("/logout", logouthandler).Methods("POST")
-	router.HandleFunc("/home/delete", deletehandler).Methods("POST")
-	router.HandleFunc("/home/edit", edithandler).Methods("POST")
-	router.HandleFunc("/home/save", savehandler).Methods("POST")
+	router.HandleFunc("/", logHandler)
+	router.HandleFunc("/login", loginHandler)
+	router.HandleFunc("/home", homeHandler)
+	router.HandleFunc("/home/tweets", usertweetHandler).Methods("POST")
+	router.HandleFunc("/logout", logoutHandler).Methods("POST")
+	router.HandleFunc("/home/delete", deleteHandler).Methods("POST")
+	router.HandleFunc("/home/edit", editHandler).Methods("POST")
+	router.HandleFunc("/home/save", saveHandler).Methods("POST")
 
     router.PathPrefix("/").Handler(http.FileServer(http.Dir("./layout/")))
 

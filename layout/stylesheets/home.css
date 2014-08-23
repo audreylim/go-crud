@@ -16,7 +16,6 @@ h1 {
 	margin-right: auto;
 	margin-top: 35px;
 	text-align: center;
-
 }
 
 #username {
@@ -32,7 +31,6 @@ button {
 	border: none;
 	background-color: #62B1F6;
 }
-
 
 #tweetbox {
 	position: relative;
@@ -59,10 +57,7 @@ button {
 	margin-left: auto;
 	margin-right: auto;
 	width: 500px;
-	
-
 }
-
 
 #logoutbutton {
 	position: fixed;
@@ -110,5 +105,3 @@ form {
 	height: 100px;
 	font-size: 15px;
 }
-
-
