@@ -222,42 +222,21 @@ func usertweetHandler(w http.ResponseWriter, r *http.Request) {
 	AddUser.Username = getUserName(r)
 	AddTweet = r.FormValue("twt")
 	InsertTweetData()
-	/*var as []Post 
-	a := User{}
-	m := ReadStatus()
-	for i:=0;i<len(m);i++{
-		as = append(as, Post{Tweetid: m[i][0], Username: currentuser, Status: m[i][1]})
-	    }
-	    a = User{Username: currentuser}
-	    for i:=0;i<len(m);i++{
-	    	a.Posts = append(a.Posts, &as[i])
-	    }
-		renderTemplate(w, "home", "homepage", a)*/
-		http.Redirect(w, r, "/home", 302)
+	http.Redirect(w, r, "/home", 302)
 }
 
 func deletehandler(w http.ResponseWriter, r *http.Request) {
 	currentuser = getUserName(r)
 	postvalue = r.PostFormValue("xdel")
 	DeleteTweet() 
-	var as []Post 
-	a := User{}
-	m := ReadStatus()
-	for i:=0;i<len(m);i++{
-		as = append(as, Post{Tweetid: m[i][0], Username: currentuser, Status: m[i][1]})
-	    }
-	    a = User{Username: currentuser}
-	for i:=0;i<len(m);i++{
-	    a.Posts = append(a.Posts, &as[i])
-	}
-	renderTemplate(w, "home", "homepage", a)
+	http.Redirect(w, r, "/home", 302)
 }
 
 func edithandler(w http.ResponseWriter, r *http.Request) {
 	statusid = r.PostFormValue("xedit")
 	as := Post{Tweetid: statusid, Status: ReadSingleStatus()}
 	person := User{Posts: []*Post{&as}}
-	renderTemplate(w, "edit", "editpage", person)//use URL Path method global
+	renderTemplate(w, "edit", "editpage", person)
 }
 
 func savehandler(w http.ResponseWriter, r *http.Request) {
