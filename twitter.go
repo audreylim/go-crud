@@ -36,7 +36,6 @@ var postvalue string
 var statusid string
 var settweet string
 var db *sql.DB
-var err error 
 
 //db
 func ReadStatus() (res [][]string) { 
@@ -301,7 +300,7 @@ func checkError(err error) {
 var router = mux.NewRouter()
 
 func main() {
-	db, err = sql.Open("mysql", "b7ce733b97afad:414aa83f@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")
+	db, err := sql.Open("mysql", "b7ce733b97afad:414aa83f@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")
 	checkError(err)
 	defer db.Close()
 	router.HandleFunc("/", logHandler)
