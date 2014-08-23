@@ -11,7 +11,7 @@ import (
 	"os"
 )
 
-//User table without Posts
+//User table 
 type User struct {
 	Userid    	int64
 	Username  	string
@@ -38,7 +38,7 @@ var settweet string
 var db *sql.DB
 
 //db
-func ReadStatus() (res [][]string) { //make Read all data //Read with current user
+func ReadStatus() (res [][]string) { 
 	err := db.Ping()
 		checkError(err)
 	rows, err := db.Query("select id, tweet, username from posts where username = ? order by id DESC", currentuser)
@@ -78,11 +78,11 @@ func ReadStatusId() (res int) {
 		fmt.Println(err)
 	}
 	defer rows.Close()
-
 	var status string
 	for rows.Next() {
 		err := rows.Scan(&status)
-			checkError(err)
+		checkError(err)
+		res = status
 	}
 	return
 }
