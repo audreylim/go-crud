@@ -88,6 +88,10 @@ form {
 }
 
 #divdr {
-	font-size: 10px;
+	font-size: 14px;
+	vertical-align: center;
 }
 
+#twt {
+	width: 200px;
+}
