@@ -97,6 +97,7 @@ form {
 }
 
 #actions {
+	position: fixed;
 	width: 110px;
 	float: right;
 	top: 0px;
