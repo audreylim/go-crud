@@ -11,7 +11,7 @@ h1 {
 }
 
 .welcome {
-	width: 360px;
+	width: 430px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 35px;
@@ -47,7 +47,7 @@ button {
 }
 
 #tweet {
-	width: 300px;
+	width: 430px;
 	height: 35px;
 	font-size: 15px;
 	text-align: center;
@@ -93,10 +93,13 @@ form {
 }
 
 #statuses {
-	width: 230px;
+	width: 270px;
 }
 
 #actions {
 	width: 110px;
 	float: right;
+	vertical-align: top;
+	padding: 0;
+	display: inline;
 }
