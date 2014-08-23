@@ -82,7 +82,6 @@ func ReadStatusId() (res int) {
 	for rows.Next() {
 		err := rows.Scan(&status)
 		checkError(err)
-		res = status
 	}
 	return
 }
