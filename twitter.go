@@ -91,11 +91,7 @@ func InsertData() {
 		checkError(err)
 	res, err := stmt.Exec(AddUser.Userid, AddUser.Username, AddUser.Password)
 		checkError(err)
-	lastId, err := res.LastInsertId()
-		checkError(err)
-	rowCnt, err := res.RowsAffected()
-		checkError(err)
-	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
+	PrintDataUpdate(res)
 }
 
 func InsertTweetData() {
@@ -103,34 +99,22 @@ func InsertTweetData() {
 		checkError(err)
 	res, err := stmt.Exec(AddTweet, AddUser.Username)
 		checkError(err)
-	lastId, err := res.LastInsertId()
-		checkError(err)
-	rowCnt, err := res.RowsAffected()
-		checkError(err)
-	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
+	PrintDataUpdate(res)
 }
 
 func DeleteTweet() {
 	stmt, err := db.Prepare("DELETE FROM posts where id = ?") 
 		checkError(err)
-	a, err := stmt.Exec(postvalue)
+	res, err := stmt.Exec(postvalue)
 		checkError(err)
-	lastId, err := a.LastInsertId()
-		checkError(err)
-	rowCnt, err := a.RowsAffected()
-		checkError(err)
-	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
+	PrintDataUpdate(res)
 }
 
 func EditTweet() {
 	stmt, err := db.Prepare("UPDATE posts set tweet = ? where id = ?")
 	a, err := stmt.Exec(settweet, statusid)
 		checkError(err)
-	lastId, err := a.LastInsertId()
-		checkError(err)
-	rowCnt, err := a.RowsAffected()
-		checkError(err)
-	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
+	PrintDataUpdate(res)
 }
 
 func AuthUser() (res string) {
@@ -295,6 +279,14 @@ func checkError(err error) {
 		fmt.Println("Fatal error", err.Error())
 		os.Exit(1)
 	}
+}
+
+func PrintDataUpdate(res) {
+	lastId, err := res.LastInsertId()
+		checkError(err)
+	rowCnt, err := res.RowsAffected()
+		checkError(err)
+	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
 }
 
 var router = mux.NewRouter()
