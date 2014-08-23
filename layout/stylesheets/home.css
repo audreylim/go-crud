@@ -14,7 +14,7 @@ h1 {
 	width: 360px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 30px;
+	margin-top: 70px;
 
 }
 
@@ -35,7 +35,7 @@ button {
 
 #tweetbox {
 	position: relative;
-	margin-top: 30px;
+	margin-top: 25px;
 	margin-bottom: 30px;
 	text-align: center;
 }
@@ -93,9 +93,9 @@ form {
 }
 
 #statuses {
-	width: 150px;
+	width: 200px;
 }
 
 #actions {
-	width: 100px;
+	width: 60px;
 }
