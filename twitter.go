@@ -22,7 +22,7 @@ type User struct {
 //Posts table
 type Post struct {
 	Tweetid 	string
-	Username    string
+	Username   	string
 	Status 		string
 }
 
