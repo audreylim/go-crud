@@ -97,8 +97,8 @@ form {
 }
 
 #actions {
-	position: fixed;
+	position: relative;
 	width: 110px;
 	float: right;
-	top: 0px;
+	vertical-align: top;
 }
