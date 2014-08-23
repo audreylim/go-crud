@@ -20,9 +20,9 @@
         <div id="tweetcol">
   			{{with .Posts}}
         	{{range .}}
-        		<span id="statuses">
+        		<div id="statuses">
     			<p id="twt">{{ .Status}}</p>
-    			</span>
+    			</div>
     			<span id="actions">
     			<form action="/home/delete" method="POST">
 					<button type="submit" id="xbutton" name="xdel" value="{{.Tweetid}}">Delete</button>
