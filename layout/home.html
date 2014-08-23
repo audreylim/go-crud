@@ -20,7 +20,7 @@
         <div id="tweetcol">
   			{{with .Posts}}
         	{{range .}}
-    			<p id="twt">{{ .Status}}</p>
+    			<div id="twt">{{ .Status}}</div>
     			<form action="/home/delete" method="POST">
 					<button type="submit" id="xbutton" name="xdel" value="{{.Tweetid}}">Delete</button>
 						<span id="divdr">|</span>
