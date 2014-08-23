@@ -17,7 +17,6 @@ type User struct {
 	Username  	string
 	Password 	string
 	Posts 		[]*Post
-
 }
 
 //Posts table
@@ -27,7 +26,6 @@ type Post struct {
 	Status 		string
 }
 
-
 //global variables
 var AddUser User = User{}
 var AddTweet string
@@ -35,6 +33,8 @@ var logname string
 var logpass string
 var currentuser string
 var postvalue string
+var statusid string
+var settweet string
 var db *sql.DB
 
 //db
@@ -111,7 +111,6 @@ func InsertTweetData() {
 	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
 }
 
-
 func DeleteTweet() {
 	stmt, err := db.Prepare("DELETE FROM posts where id = ?") 
 		checkError(err)
@@ -165,7 +164,6 @@ func AuthPw() (res string) {
 	return 
 }
 
-
 //handlers
 func loghandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "log", "log", User{})
@@ -196,12 +194,10 @@ func loginhandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, redirectTarget, 302)
 }
 
-
 func logouthandler(w http.ResponseWriter, r *http.Request) {
 	clearSession(w)
 	http.Redirect(w, r, "/", 302)
 }
-
 
 func homehandler(w http.ResponseWriter, r *http.Request) {
 	currentuser = getUserName(r)
@@ -217,18 +213,16 @@ func homehandler(w http.ResponseWriter, r *http.Request) {
 	    	a.Posts = append(a.Posts, &as[i])
 	    }
 		renderTemplate(w, "home", "homepage", a)
-
 	} else {
 		http.Redirect(w, r, "/", 302)
 	}
 }
 
-
 func usertweetHandler(w http.ResponseWriter, r *http.Request) {
 	AddUser.Username = getUserName(r)
 	AddTweet = r.FormValue("twt")
 	InsertTweetData()
-	var as []Post 
+	/*var as []Post 
 	a := User{}
 	m := ReadStatus()
 	for i:=0;i<len(m);i++{
@@ -238,33 +232,27 @@ func usertweetHandler(w http.ResponseWriter, r *http.Request) {
 	    for i:=0;i<len(m);i++{
 	    	a.Posts = append(a.Posts, &as[i])
 	    }
-		renderTemplate(w, "home", "homepage", a)
+		renderTemplate(w, "home", "homepage", a)*/
+		http.Redirect(w, r, "/home", 302)
 }
-
 
 func deletehandler(w http.ResponseWriter, r *http.Request) {
 	currentuser = getUserName(r)
 	postvalue = r.PostFormValue("xdel")
 	DeleteTweet() 
-	if currentuser != "" { //do u need this and redirect
-		var as []Post 
-		a := User{}
-		m := ReadStatus()
-		for i:=0;i<len(m);i++{
-			as = append(as, Post{Tweetid: m[i][0], Username: currentuser, Status: m[i][1]})
-	    	}
-	    	a = User{Username: currentuser}
-	    for i:=0;i<len(m);i++{
-	    	a.Posts = append(a.Posts, &as[i])
+	var as []Post 
+	a := User{}
+	m := ReadStatus()
+	for i:=0;i<len(m);i++{
+		as = append(as, Post{Tweetid: m[i][0], Username: currentuser, Status: m[i][1]})
 	    }
-		renderTemplate(w, "home", "homepage", a)
-		} else {
-			http.Redirect(w, r, "/", 302)
+	    a = User{Username: currentuser}
+	for i:=0;i<len(m);i++{
+	    a.Posts = append(a.Posts, &as[i])
+	}
+	renderTemplate(w, "home", "homepage", a)
 	}
 }
-
-var statusid string
-var settweet string
 
 func edithandler(w http.ResponseWriter, r *http.Request) {
 	statusid = r.PostFormValue("xedit")
@@ -276,16 +264,13 @@ func edithandler(w http.ResponseWriter, r *http.Request) {
 func savehandler(w http.ResponseWriter, r *http.Request) {
 	statusid = r.PostFormValue("xsave")
 	settweet = r.PostFormValue("textedit")
-
 	EditTweet()
 	http.Redirect(w, r, "/home", 302)
 }
 
-
 var cookieHandler = securecookie.New(
 	securecookie.GenerateRandomKey(64),
 	securecookie.GenerateRandomKey(32))
-
 
 func getUserName(r *http.Request) (currentuser string) {
 	if cookie, err := r.Cookie("session"); err == nil {
@@ -296,7 +281,6 @@ func getUserName(r *http.Request) (currentuser string) {
 	}
 	return 
 }
-
 
 func setSession(userName string, w http.ResponseWriter) {
 	value := map[string]string{
@@ -312,7 +296,6 @@ func setSession(userName string, w http.ResponseWriter) {
 	}
 }
 
-
 func clearSession(r http.ResponseWriter) {
 	cookie := &http.Cookie{
 		Name:   "session",
@@ -323,7 +306,6 @@ func clearSession(r http.ResponseWriter) {
 	http.SetCookie(r, cookie)
 }
 
-
 func renderTemplate(w http.ResponseWriter, tmpl string, def string, x User) {
 	t := template.Must(template.New("tele").ParseFiles("layout/" + tmpl + ".html"))
 	if err := t.ExecuteTemplate(w, def, x); err != nil {
@@ -331,22 +313,18 @@ func renderTemplate(w http.ResponseWriter, tmpl string, def string, x User) {
 	}
 }
 
-
 func checkError(err error) {
 	if err != nil {
 		fmt.Println("Fatal error", err.Error())
-		os.Exit(1)//need this?
+		os.Exit(1)
 	}
 }
 
-
-//server
 var router = mux.NewRouter()
 
-
-
 func main() {
-	db, _ = sql.Open("mysql", "b7ce733b97afad:414aa83f@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")//rmb to handle error
+	db, err = sql.Open("mysql", "b7ce733b97afad:414aa83f@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")
+	checkError(err)
 	defer db.Close()
 	router.HandleFunc("/", loghandler)
 	router.HandleFunc("/login", loginhandler)
