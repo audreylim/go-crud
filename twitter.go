@@ -251,7 +251,6 @@ func deletehandler(w http.ResponseWriter, r *http.Request) {
 	    a.Posts = append(a.Posts, &as[i])
 	}
 	renderTemplate(w, "home", "homepage", a)
-	}
 }
 
 func edithandler(w http.ResponseWriter, r *http.Request) {
