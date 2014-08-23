@@ -15,19 +15,19 @@
 			<h1 id="hi">hi, </h1><h1 id="username">{{.Username}}</h1>
 		</div>
 
-        <div id="tweetbox">
+        <div id="entertweetbox">
         	<form action="/home/tweets" method="POST">
-        		<input type="text" id="tweet" name="twt" placeholder="
+        		<input type="text" id="entertweetform" name="twt" placeholder="
         enter tweet here" maxlength="140"></input>
         		<button type="Tweet" id="twtbutton">Tweet</button>
             </form>
 		</div>
    
-        <div id="tweetcol">
+        <div id="tweetdisplaybox">
   		{{with .Posts}}
         {{range .}}
         	<div id="statuses">
-    			<p id="twt">{{ .Status}}</p>
+    			<p id="status">{{ .Status}}</p>
     		</div>
 
     		<span id="actions">
@@ -49,7 +49,7 @@
 			<form action="/logout" method="POST">
 				<button type="submit" id="logoutbutton">Goodbye</button>
 			</form>	
-			
+
 	</body>
 </html>
 {{end}}

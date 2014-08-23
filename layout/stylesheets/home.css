@@ -32,7 +32,7 @@ button {
 	background-color: #62B1F6;
 }
 
-#tweetbox {
+#entertweetbox {
 	position: relative;
 	margin-top: 25px;
 	margin-bottom: 30px;
@@ -45,18 +45,18 @@ button {
 	background-color: #000;
 }
 
-#tweet {
+#entertweetform {
 	width: 430px;
 	height: 35px;
 	font-size: 15px;
 	text-align: center;
 }
 
-#tweetcol {
+#tweetdisplaybox {
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
-	width: 500px;
+	width: 480px;
 }
 
 #logoutbutton {
@@ -73,7 +73,7 @@ form {
 	display: inline;
 }
 
-#twt, #xbutton, #xedit, #divdr {
+#status, #xbutton, #xedit, #divdr {
 	position: relative;
 	display: inline;
 }
