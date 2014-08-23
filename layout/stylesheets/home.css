@@ -11,7 +11,7 @@ h1 {
 }
 
 .welcome {
-	width: 430px;
+	width: 440px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 35px;
@@ -101,5 +101,10 @@ form {
 	float: right;
 	vertical-align: top;
 	display: inline;
-	margin-top: -25px;
+	margin-top: -22px;
+}
+
+#editbox {
+	width: 300px;
+	height: 250px;
 }
