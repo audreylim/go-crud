@@ -76,18 +76,14 @@ form {
 	display: inline;
 }
 
-#twt, #xbutton, #xedit {
+#twt, #xbutton, #xedit, #divdr {
 	position: relative;
 	display: inline;
 }
 
-#xbutton, #xedit {
+#xbutton, #xedit, #divdr {
 	float: right;
 	background-color: #fff;
 	color: #000;
 }
 
-#divdr {
-	display: inline;
-	float: right;
-}
