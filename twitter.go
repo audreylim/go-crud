@@ -302,7 +302,7 @@ var router = mux.NewRouter()
 
 func main() {
 
-	db, err = sql.Open("mysql", os.Getenv("DB_USERNAME") + ":" + os.Getenv("DB_PASSWORD") + "@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/" + os.Getenv("DB_NAME"))
+	db, err = sql.Open("mysql", os.Getenv("DB_USERNAME") + ":" + os.Getenv("DB_PASSWORD") + "@tcp(" + os.Getenv("DB_CLEARDB") + ":3306)/" + os.Getenv("DB_NAME"))
 	checkError(err)
 	defer db.Close()
 
