@@ -7,8 +7,8 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/gorilla/securecookie"
 	"html/template"
-	"net/http"
 	"log"
+	"net/http"
 	"os"
 )
 
@@ -54,7 +54,7 @@ func ReadStatus() (res [][]string) {
 	for rows.Next() {
 		err := rows.Scan(&id, &tweet, &username)
 		if err != nil {
-		 return res
+			return res
 		}
 		var a []string
 		a = append(a, id, tweet, username)
@@ -98,7 +98,7 @@ func ReadStatusId() (res int) {
 	for rows.Next() {
 		err := rows.Scan(&status)
 		if err != nil {
-		log.Fatal(err)
+			log.Fatal(err)
 		}
 	}
 	return
@@ -353,10 +353,10 @@ func renderTemplate(w http.ResponseWriter, tmpl string, def string, x User) {
 var router = mux.NewRouter()
 
 func main() {
-	db, err = sql.Open("mysql", os.Getenv("DB_USERNAME") + ":" + os.Getenv("DB_PASSWORD") + "@tcp(" + os.Getenv("DB_CLEARDB") + ":3306)/" + os.Getenv("DB_NAME"))
+	db, err = sql.Open("mysql", os.Getenv("DB_USERNAME")+":"+os.Getenv("DB_PASSWORD")+"@tcp("+os.Getenv("DB_CLEARDB")+":3306)/"+os.Getenv("DB_NAME"))
 	if err != nil {
 		log.Fatal(err)
-	} 
+	}
 	defer db.Close()
 
 	router.HandleFunc("/", logHandler)
