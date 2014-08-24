@@ -52,7 +52,7 @@ func ReadStatus() (res [][]string) {
 	defer rows.Close()
 	var tweet, id, username string
 	for rows.Next() {
-		err := rows.Scan(&id, &tweet, &username)
+		_ := rows.Scan(&id, &tweet, &username)
 		var a []string
 		a = append(a, id, tweet, username)
 		res = append(res, a)
@@ -190,7 +190,7 @@ func AuthUser() (res string) {
 	defer rows.Close()
 	var logusername string
 	for rows.Next() {
-		err := rows.Scan(&logusername)
+		_ := rows.Scan(&logusername)
 
 		res = logusername
 	}
@@ -209,7 +209,7 @@ func AuthPw() (res string) {
 	defer rows.Close()
 	var logpw string
 	for rows.Next() {
-		err := rows.Scan(&logpw)
+		_ := rows.Scan(&logpw)
 
 		res = logpw
 	}
