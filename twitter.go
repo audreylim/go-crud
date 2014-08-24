@@ -42,7 +42,7 @@ var err error
 func ReadStatus() (res [][]string) {
 	err := db.Ping()
 	checkError(err)
-	rows, err := db.Query("select id, tweet, username from posts where username = ? order by id DESC", currentuser)
+	rows, err := db.Query("SELECT id, tweet, username FROM posts WHERE username = ? order by id DESC", currentuser)
 	checkError(err)
 	defer rows.Close()
 	var tweet, id, username string
@@ -59,7 +59,7 @@ func ReadStatus() (res [][]string) {
 func ReadSingleStatus() (res string) {
 	err := db.Ping()
 	checkError(err)
-	rows, err := db.Query("select tweet from posts where id = ?", statusid)
+	rows, err := db.Query("SELECT tweet FROM posts WHERE id = ?", statusid)
 	checkError(err)
 	defer rows.Close()
 	var status string
@@ -74,7 +74,7 @@ func ReadSingleStatus() (res string) {
 func ReadStatusId() (res int) {
 	err := db.Ping()
 	checkError(err)
-	rows, err := db.Query("Select id from posts where tweet = ?", AddTweet)
+	rows, err := db.Query("SELECT id FROM posts WHERE tweet = ?", AddTweet)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -124,7 +124,7 @@ func DeleteTweet() {
 }
 
 func EditTweet() {
-	stmt, err := db.Prepare("UPDATE posts set tweet = ? where id = ?")
+	stmt, err := db.Prepare("UPDATE posts SET tweet = ? where id = ?")
 	a, err := stmt.Exec(settweet, statusid)
 	checkError(err)
 	lastId, err := a.LastInsertId()
@@ -137,7 +137,7 @@ func EditTweet() {
 func AuthUser() (res string) {
 	err := db.Ping()
 	checkError(err)
-	rows, err := db.Query("select username from users where username = ?", logname)
+	rows, err := db.Query("SELECT username FROM users WHERE username = ?", logname)
 	checkError(err)
 	defer rows.Close()
 	var logusername string
@@ -152,7 +152,7 @@ func AuthUser() (res string) {
 func AuthPw() (res string) {
 	err := db.Ping()
 	checkError(err)
-	rows, err := db.Query("select password from users where username = ?", logname)
+	rows, err := db.Query("SELECT password FROM users WHERE username = ?", logname)
 	checkError(err)
 	defer rows.Close()
 	var logpw string
@@ -299,9 +299,14 @@ func checkError(err error) {
 }
 
 var router = mux.NewRouter()
+var dbusername string
+var dbpassword string
 
 func main() {
-	db, err = sql.Open("mysql", "b7ce733b97afad:414aa83f@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")
+	db_user := os.Getenv("DB_USERNAME")
+	db_pw := os.Getenv("DB_PASSWORD")
+
+	db, err = sql.Open("mysql", db_user + ":" + db_pw + "@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")
 	checkError(err)
 	defer db.Close()
 
