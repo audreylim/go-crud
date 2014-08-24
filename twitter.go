@@ -2,11 +2,11 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/securecookie"
 	"html/template"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
