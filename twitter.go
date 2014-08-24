@@ -358,7 +358,6 @@ func main() {
 		log.Fatal(err)
 	}
 	defer db.Close()
-
 	router.HandleFunc("/", logHandler)
 	router.HandleFunc("/login", loginHandler)
 	router.HandleFunc("/home", homeHandler)
@@ -367,9 +366,7 @@ func main() {
 	router.HandleFunc("/home/delete", deleteHandler).Methods("POST")
 	router.HandleFunc("/home/edit", editHandler).Methods("POST")
 	router.HandleFunc("/home/save", saveHandler).Methods("POST")
-
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./layout/")))
-
 	http.Handle("/", router)
 	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 	if err != nil {
