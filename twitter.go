@@ -299,14 +299,10 @@ func checkError(err error) {
 }
 
 var router = mux.NewRouter()
-var dbusername string
-var dbpassword string
 
 func main() {
-	db_user := os.Getenv("DB_USERNAME")
-	db_pw := os.Getenv("DB_PASSWORD")
 
-	db, err = sql.Open("mysql", db_user + ":" + db_pw + "@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")
+	db, err = sql.Open("mysql", os.Getenv("DB_USERNAME") + ":" + os.Getenv("DB_PASSWORD") + "@tcp(us-cdbr-iron-east-01.cleardb.net:3306)/heroku_31467bc306ebc54")
 	checkError(err)
 	defer db.Close()
 
