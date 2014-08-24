@@ -45,14 +45,17 @@ func ReadStatus() (res [][]string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	rows, err := db.Query("SELECT id, tweet, username FROM posts WHERE username = ? order by id DESC", currentuser)
+	rows, err := db.Query("SELECT id, tweet, username FROM posts WHERE username = ? ORDER BY id DESC", currentuser)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rows.Close()
 	var tweet, id, username string
 	for rows.Next() {
-		_ := rows.Scan(&id, &tweet, &username)
+		err := rows.Scan(&id, &tweet, &username)
+		if err != nil {
+		return 0
+		}
 		var a []string
 		a = append(a, id, tweet, username)
 		res = append(res, a)
@@ -190,8 +193,10 @@ func AuthUser() (res string) {
 	defer rows.Close()
 	var logusername string
 	for rows.Next() {
-		_ := rows.Scan(&logusername)
-
+		err := rows.Scan(&logusername)
+		if err != nil {
+			return 0
+		}
 		res = logusername
 	}
 	return
@@ -209,8 +214,10 @@ func AuthPw() (res string) {
 	defer rows.Close()
 	var logpw string
 	for rows.Next() {
-		_ := rows.Scan(&logpw)
-
+		err := rows.Scan(&logpw)
+		if err != nil {
+			return 0
+		}
 		res = logpw
 	}
 	return
