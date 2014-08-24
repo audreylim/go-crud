@@ -54,7 +54,7 @@ func ReadStatus() (res [][]string) {
 	for rows.Next() {
 		err := rows.Scan(&id, &tweet, &username)
 		if err != nil {
-		 return [""][""]
+		 return res
 		}
 		var a []string
 		a = append(a, id, tweet, username)
