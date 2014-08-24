@@ -374,4 +374,4 @@ func main() {
 	}
 }
 
-//to revisit error handling again
+//to revisit lousy error handling again
