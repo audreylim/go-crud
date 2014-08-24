@@ -12,7 +12,7 @@ import (
 	"os"
 )
 
-//User table
+//Users table
 type User struct {
 	Userid   int64
 	Username string
