@@ -302,7 +302,7 @@ var router = mux.NewRouter()
 
 func main() {
 
-	db, err = sql.Open("mysql", os.Getenv("DATABASE_URL")
+	db, err = sql.Open("mysql", os.Getenv("DATABASE_URL"))
 	checkError(err)
 	defer db.Close()
 
