@@ -54,7 +54,7 @@ func ReadStatus() (res [][]string) {
 	for rows.Next() {
 		err := rows.Scan(&id, &tweet, &username)
 		if err != nil {
-		return 0
+		 return [][]string
 		}
 		var a []string
 		a = append(a, id, tweet, username)
@@ -77,7 +77,7 @@ func ReadSingleStatus() (res string) {
 	for rows.Next() {
 		err := rows.Scan(&status)
 		if err != nil {
-			return [][]string
+			log.Fatal(err)
 		}
 		res = status
 	}
@@ -195,7 +195,7 @@ func AuthUser() (res string) {
 	for rows.Next() {
 		err := rows.Scan(&logusername)
 		if err != nil {
-			return [][]string
+			return "0"
 		}
 		res = logusername
 	}
@@ -216,7 +216,7 @@ func AuthPw() (res string) {
 	for rows.Next() {
 		err := rows.Scan(&logpw)
 		if err != nil {
-			return [][]string
+			return ""
 		}
 		res = logpw
 	}
