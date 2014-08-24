@@ -77,7 +77,7 @@ func ReadSingleStatus() (res string) {
 	for rows.Next() {
 		err := rows.Scan(&status)
 		if err != nil {
-		log.Fatal(err)
+			return [][]string
 		}
 		res = status
 	}
@@ -195,7 +195,7 @@ func AuthUser() (res string) {
 	for rows.Next() {
 		err := rows.Scan(&logusername)
 		if err != nil {
-			return 0
+			return [][]string
 		}
 		res = logusername
 	}
@@ -216,7 +216,7 @@ func AuthPw() (res string) {
 	for rows.Next() {
 		err := rows.Scan(&logpw)
 		if err != nil {
-			return 0
+			return [][]string
 		}
 		res = logpw
 	}
