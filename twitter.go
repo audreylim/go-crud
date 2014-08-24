@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/securecookie"
 	"html/template"
 	"net/http"
+	"log"
 	"os"
 )
 
