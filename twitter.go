@@ -41,14 +41,17 @@ var err error
 //db
 func ReadStatus() (res [][]string) {
 	err := db.Ping()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	rows, err := db.Query("SELECT id, tweet, username FROM posts WHERE username = ? order by id DESC", currentuser)
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer rows.Close()
 	var tweet, id, username string
 	for rows.Next() {
 		err := rows.Scan(&id, &tweet, &username)
-		checkError(err)
 		var a []string
 		a = append(a, id, tweet, username)
 		res = append(res, a)
@@ -58,14 +61,18 @@ func ReadStatus() (res [][]string) {
 
 func ReadSingleStatus() (res string) {
 	err := db.Ping()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	rows, err := db.Query("SELECT tweet FROM posts WHERE id = ?", statusid)
 	checkError(err)
 	defer rows.Close()
 	var status string
 	for rows.Next() {
 		err := rows.Scan(&status)
-		checkError(err)
+		if err != nil {
+		log.Fatal(err)
+		}
 		res = status
 	}
 	return
@@ -73,77 +80,115 @@ func ReadSingleStatus() (res string) {
 
 func ReadStatusId() (res int) {
 	err := db.Ping()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	rows, err := db.Query("SELECT id FROM posts WHERE tweet = ?", AddTweet)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 	defer rows.Close()
 	var status string
 	for rows.Next() {
 		err := rows.Scan(&status)
-		checkError(err)
+		if err != nil {
+		log.Fatal(err)
+		}
 	}
 	return
 }
 
 func InsertData() {
 	stmt, err := db.Prepare("INSERT INTO users(id, username, password) VALUES(?, ?, ?)")
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	res, err := stmt.Exec(AddUser.Userid, AddUser.Username, AddUser.Password)
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	lastId, err := res.LastInsertId()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	rowCnt, err := res.RowsAffected()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
 }
 
 func InsertTweetData() {
 	stmt, err := db.Prepare("INSERT INTO posts(tweet, username) VALUES(?, ?)")
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	res, err := stmt.Exec(AddTweet, AddUser.Username)
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	lastId, err := res.LastInsertId()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	rowCnt, err := res.RowsAffected()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
 }
 
 func DeleteTweet() {
 	stmt, err := db.Prepare("DELETE FROM posts where id = ?")
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	res, err := stmt.Exec(postvalue)
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	lastId, err := res.LastInsertId()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	rowCnt, err := res.RowsAffected()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
 }
 
 func EditTweet() {
 	stmt, err := db.Prepare("UPDATE posts SET tweet = ? where id = ?")
 	a, err := stmt.Exec(settweet, statusid)
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	lastId, err := a.LastInsertId()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	rowCnt, err := a.RowsAffected()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Printf("ID = %d, affected = %d\n", lastId, rowCnt)
 }
 
 func AuthUser() (res string) {
 	err := db.Ping()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	rows, err := db.Query("SELECT username FROM users WHERE username = ?", logname)
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer rows.Close()
 	var logusername string
 	for rows.Next() {
 		err := rows.Scan(&logusername)
-		checkError(err)
+
 		res = logusername
 	}
 	return
@@ -151,14 +196,18 @@ func AuthUser() (res string) {
 
 func AuthPw() (res string) {
 	err := db.Ping()
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	rows, err := db.Query("SELECT password FROM users WHERE username = ?", logname)
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer rows.Close()
 	var logpw string
 	for rows.Next() {
 		err := rows.Scan(&logpw)
-		checkError(err)
+
 		res = logpw
 	}
 	return
@@ -287,23 +336,17 @@ func clearSession(r http.ResponseWriter) {
 func renderTemplate(w http.ResponseWriter, tmpl string, def string, x User) {
 	t := template.Must(template.New("tele").ParseFiles("layout/" + tmpl + ".html"))
 	if err := t.ExecuteTemplate(w, def, x); err != nil {
-		panic(err)
-	}
-}
-
-func checkError(err error) {
-	if err != nil {
-		fmt.Println("Fatal error", err.Error())
-		os.Exit(1)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
 var router = mux.NewRouter()
 
 func main() {
-
 	db, err = sql.Open("mysql", os.Getenv("DB_USERNAME") + ":" + os.Getenv("DB_PASSWORD") + "@tcp(" + os.Getenv("DB_CLEARDB") + ":3306)/" + os.Getenv("DB_NAME"))
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	} 
 	defer db.Close()
 
 	router.HandleFunc("/", logHandler)
