@@ -54,7 +54,7 @@ func ReadStatus() (res [][]string) {
 	for rows.Next() {
 		err := rows.Scan(&id, &tweet, &username)
 		if err != nil {
-		 return "0"
+		 return [""][""]
 		}
 		var a []string
 		a = append(a, id, tweet, username)
@@ -195,7 +195,7 @@ func AuthUser() (res string) {
 	for rows.Next() {
 		err := rows.Scan(&logusername)
 		if err != nil {
-			return "0"
+			return ""
 		}
 		res = logusername
 	}
