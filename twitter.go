@@ -66,7 +66,9 @@ func ReadSingleStatus() (res string) {
 		log.Fatal(err)
 	}
 	rows, err := db.Query("SELECT tweet FROM posts WHERE id = ?", statusid)
-	checkError(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer rows.Close()
 	var status string
 	for rows.Next() {
